@@ -1,29 +1,482 @@
-{%- style -%}
-  .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-{%- endstyle -%}
+{% comment %}
+Pop Up Info:
+- flaoting window that is centered on the screen for both mobile and desktop
+- appears on page load
+- has a white background with a blue border and shadow
+- interactions:
+    - clicking outside the popup closes it
+    - clicking the "Nah, I Hate Deals" text closes it
+    - clicking the "SHOP ALL STYLES" button takes user to the shop page and adds the code goodr5 to their cart
+    - esc key also closes the popup
+Contents:
+- Desktop
+    - Desktop Overlay Background
+        - H 654 W 484
+        - Color White (#FFFFFF)
+        - Corner Radius 8px
+        - Stroke #0C2340 width 3px
+        - Shadow color #0C2340 -4, 4, 0, 0
+    - image layout: picture that i will provide
+        - Flow: Vertical
+        - Width: Fixed (374px)
+        - Height Fixed (360px)
+        - Radius 4px
+        - Padding
+            - Top 144px
+            - Right 82px
+            - Bottom 144px
+            - Left 82px
+            - Gap 10px
+    - company logo centered on image: logo will be provided by me
+    - Text under picture
+        - Width: Fill (374px)
+        - Height: Hug (56px)
+        - Text: "Use code goodr5 for $5 off your first order"
+        - Font: Gibson
+        - Size: 24px
+        - Weight: 700
+        - Color: Navy #0C2340
+        - horizontal align: center
+        - line height: 28px
+        - letter spacing: 0%
+        - style: Bold
+        - case: Uppercase
+        - goodr5 is pink #E06287
+    - Button
+        - Flow: horizontal
+        - Width: Fill (374px)
+        - Height: Hug (42px)
+        - radius 25px
+        - border: 2px
+            - alignment: inside
+        - background color: yellow #EDE939
+        - padding
+            - Top 12px
+            - Right 121px
+            - Bottom 12px
+            - Left 121px
+            - gap 10px
+        - shadow color: #0C2340 -4, 4, 0, 0
+        - Text: "SHOP ALL STYLES"
+            - Width: Hug 150px
+            - Height: Hug 18px
+            - border: 1px
+                - alignment: outside
+            - Font: Gibson
+            - weight: 700
+            - style: Bold
+            -line height: 100%
+            - letter spacing: 0%
+            - horizontal align: center
+            - case: Uppercase
+            - color: Navy #0C2340
+            - size: 18px
+            - drop shadow: #0C2340 -2.75, 2.75, 0, 0
+    - Text under button
+        - Width: hug (164px)
+        - Height: Hug (18px)
+        - Text: "Nah, I Hate Deals"
+        - Font: Gibson
+        - style: bold
+        - Size: 18px
+        - Weight: 700
+        - line height: 100%
+        - letter spacing: 0%
+        - Color: Navy #0C2340
+        - horizontal align: center
+        - case: uppercase
+        - decorations: underline
+            - style: solid
+            - color: Navy #0C2340
+            - thickness: 0%
+            - offset: 0%
+            - skip ink: true
+- Mobile
+    - Mobile Overlay Background
+        - H 550 W 326
+        - Color White (#FFFFFF)
+        - Corner Radius 4px
+        - Stroke #0C2340 width 2px
+        - Shadow color #0C2340 -2.75, 2.75, 0, 0
+    - image layout: picture that i will provide
+        - Flow: Vertical
+        - Width: Fixed (252px)
+        - Height Fixed (342px)
+        - Radius 4px
+        - Padding
+            - Top 132px
+            - Right 23px
+            - Bottom 132px
+            - Left 23px
+            - Gap 10px
+    - company logo centered on image - logo will be provided by me
+        - 
+    - Text under picture
+        - Width: Fill (252px)
+        - Height: Hug (40px)
+        - Text: "Use code goodr5 for $5 off your first order"
+        - Font: Gibson
+        - Size: 18px
+        - Weight: 700
+        - Color: Navy #0C2340
+        - horizontal align: center
+        - line height: 20px
+        - letter spacing: 0%
+        - style: Bold
+        - case: Uppercase
+        - goodr5 is pink #E06287
+    - Button
+        - Flow: horizontal
+        - Width: Fill (252px)
+        - Height: Hug (28px)
+        - radius 25px
+        - border: 1.5px
+            - alignment: inside
+        - background color: yellow #EDE939
+        - padding
+            - Top 12px
+            - Right 81.49px
+            - Bottom 12px
+            - Left 81.49px
+            - gap 6.73px
+        - shadow color: #0C2340 -2.75, 2.75, 0, 0
+        - Text: "SHOP ALL STYLES"
+            - Width: Hug 117px
+            - Height: Hug 14px
+            - border: .67px
+                - alignment: outside
+            - Font: Gibson
+            - weight: 700
+            - style: Bold
+            -line height: 100%
+            - letter spacing: 0%
+            - horizontal align: center
+            - case: Uppercase
+            - color: Navy #0C2340
+            - size: 14px
+            - drop shadow: #0C2340 -1.85, 1.85, 0, 0
+    - Text under button
+        - Width: hug (128px)
+        - Height: Hug (14px)
+        - Text: "Nah, I Hate Deals"
+        - Font: Gibson
+        - style: bold
+        - Size: 14px
+        - Weight: 700
+        - line height: 100%
+        - letter spacing: 0%
+        - Color: Navy #0C2340
+        - horizontal align: center
+        - case: uppercase
+        - decorations: underline
+            - style: solid
+            - color: Navy #0C2340
+            - thickness: 0%
+            - offset: 0%
+            - skip ink: true
 
-<div class="popup-overlay">
-  <h2 style="color: white;">Overlay Active</h2>
-</div>
+{% endcomment %}
+
+{% comment %}
+  SECTION: Pop Up Goodr
+  Assets must be in the 'Assets' folder:
+  - desktopimage.jpg
+  - mobileimage.jpg
+  - goodrlogo.png
+{% endcomment %}
+
+{%- if section.settings.show_popup -%}
+
+  <div id="goodrPopupOverlay" class="goodr-overlay">
+    
+    <div class="goodr-modal">
+      
+      <div class="goodr-image-container">
+        <picture>
+          <source media="(min-width: 768px)" srcset="{{ 'desktopimage.png' | asset_url }}">
+
+          <!-- Mobile image: fixed rendered size 252x342 (set attributes to match displayed size) -->
+          <img src="{{ 'mobileimage.png' | asset_url }}" alt="Promo Background" class="goodr-bg-img" width="252" height="342" loading="eager" decoding="async">
+        </picture>
+
+        <div class="goodr-logo-wrapper">
+          <!-- Mobile logo (150 x 54.16 ~ 54) -->
+          <img class="goodr-logo goodr-logo--mobile" src="{{ 'goodrlogo.png' | asset_url }}" alt="goodr Logo" width="150" height="54" loading="eager" decoding="async">
+
+          <!-- Desktop logo (200 x 72.21 ~ 72) -->
+          <img class="goodr-logo goodr-logo--desktop" src="{{ 'goodrlogo.png' | asset_url }}" alt="goodr Logo" width="200" height="72" loading="eager" decoding="async">
+        </div>
+      </div>
+
+      <div class="goodr-text-content">
+        <p>USE CODE <span class="goodr-highlight">goodr5</span> FOR $5 OFF YOUR FIRST ORDER</p>
+      </div>
+
+      <div class="goodr-actions">
+        <button id="goodrShopBtn" class="goodr-btn">
+          SHOP ALL STYLES
+        </button>
+        
+        <a href="#" id="goodrCloseLink" class="goodr-close-link">Nah, I Hate Deals</a>
+      </div>
+
+    </div>
+  </div>
+
+  {% style %}
+    /* --- FONTS --- */
+    .goodr-overlay, .goodr-modal {
+      font-family: 'Gibson', sans-serif;
+      box-sizing: border-box;
+    }
+
+    /* --- OVERLAY --- */
+    .goodr-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+
+    .goodr-overlay.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* --- MODAL BOX --- */
+    .goodr-modal {
+      background-color: #FFFFFF;
+      border: 2px solid #0C2340;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* --- MOBILE STYLES (< 768px) --- */
+    .goodr-modal {
+      width: 326px;
+      height: 550px;
+      border-radius: 4px;
+      box-shadow: -2.75px 2.75px 0px 0px #0C2340;
+      padding-top: 20px;
+    }
+
+    .goodr-image-container {
+      position: relative;
+      width: 252px;
+      height: 342px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .goodr-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .goodr-logo-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      text-align: center;
+    }
+    
+    /* Default: show mobile logo, hide desktop logo */
+    .goodr-logo { height: auto; display: none; }
+    .goodr-logo--mobile { display: block; width: 150px; }
+    .goodr-logo--desktop { display: none; }
+
+    @media (min-width: 768px) {
+      /* On desktop show the desktop logo with specified size */
+      .goodr-logo--mobile { display: none; }
+      .goodr-logo--desktop { display: block; width: 200px; }
+    }
+
+    .goodr-text-content {
+      width: 252px;
+      text-align: center;
+      color: #0C2340;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 20px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* Remove default P margins */
+    .goodr-text-content p {
+        margin: 0;
+    }
+
+    .goodr-highlight {
+      color: #E06287;
+    }
+
+    .goodr-btn {
+      width: 252px;
+      height: 28px; /* Height per spec (very slim button) */
+      padding: 12px 0; /* Padding will expand visual height */
+      background-color: #EDE939;
+      border-radius: 25px;
+      border: 1.5px solid #0C2340;
+      box-shadow: -2.75px 2.75px 0px 0px #0C2340;
+      cursor: pointer;
+      color: #0C2340;
+      font-family: 'Gibson', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-shadow: -1.85px 1.85px 0px rgba(12, 35, 64, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .goodr-btn:hover {
+      transform: translate(-1px, 1px);
+      box-shadow: -1px 1px 0px 0px #0C2340;
+    }
+
+    .goodr-close-link {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0C2340;
+      text-decoration: underline;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    /* --- DESKTOP STYLES (>= 768px) --- */
+    @media (min-width: 768px) {
+      .goodr-modal {
+        width: 484px;
+        height: 654px;
+        border-width: 3px;
+        border-radius: 8px;
+        box-shadow: -4px 4px 0px 0px #0C2340;
+        padding-top: 30px;
+      }
+
+      .goodr-image-container {
+        width: 374px;
+        height: 360px;
+      }
+
+      .goodr-text-content {
+        width: 374px;
+        font-size: 24px;
+        line-height: 28px;
+        margin-bottom: 15px;
+      }
+
+      .goodr-btn {
+        width: 374px;
+        height: 42px; 
+        padding: 12px 0;
+        border-width: 2px;
+        box-shadow: -4px 4px 0px 0px #0C2340;
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+
+      .goodr-close-link {
+        font-size: 18px;
+      }
+    }
+  {% endstyle %}
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const popupOverlay = document.getElementById('goodrPopupOverlay');
+      const shopBtn = document.getElementById('goodrShopBtn');
+      const closeLink = document.getElementById('goodrCloseLink');
+
+      // OPEN: After 500ms delay
+      setTimeout(() => {
+        popupOverlay.classList.add('is-visible');
+      }, 500);
+
+      // CLOSE Function
+      function closePopup() {
+        popupOverlay.classList.remove('is-visible');
+        setTimeout(() => {
+           popupOverlay.style.display = 'none';
+        }, 300);
+      }
+
+      // Interaction: Click "Nah"
+      closeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        closePopup();
+      });
+
+      // Interaction: Click Outside
+      popupOverlay.addEventListener('click', function(e) {
+        if (e.target === popupOverlay) {
+          closePopup();
+        }
+      });
+
+      // Interaction: ESC Key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && popupOverlay.classList.contains('is-visible')) {
+          closePopup();
+        }
+      });
+
+      // Interaction: Shop Button
+      shopBtn.addEventListener('click', function() {
+        window.location.href = '/discount/goodr5?redirect=/collections/all';
+      });
+    });
+  </script>
+
+{%- endif -%}
 
 {% schema %}
 {
   "name": "GOODR5 Pop Up",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_popup",
+      "label": "Enable Pop Up",
+      "default": true
+    }
+  ],
   "presets": [
     {
-      "name": "GOODR5 Pop Up"
+      "name": "GOODR5 Pop Up",
     }
   ]
 }
 {% endschema %}
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
