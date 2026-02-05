@@ -300,10 +300,11 @@ Contents:
     .goodr-logo-wrapper {
       position: absolute;
       top: 50%;
-      /*left: 50%;*/
+      left: 50%;
       transform: translate(-50%, -50%);
-      width: 100%;
+      width: auto; /* shrink to content so centering works reliably */
       text-align: center;
+      pointer-events: none;
     }
     
     /* Default: show mobile logo, hide desktop logo */
