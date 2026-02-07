@@ -465,7 +465,44 @@ Contents:
       const shopBtn = document.getElementById('goodr5ShopBtn');
       const closeLink = document.getElementById('goodr5CloseLink');
 
-      {% comment %}
+      // ==== COOKIE MANAGEMENT FOR PERSISTENT DISMISS ====
+      const DISMISS_COOKIE_NAME = 'goodr5_popup_dismissed';
+
+      // Function to set a cookie (session cookie - expires when browser closes)
+      function setCookie(name, value, days) {
+        let cookieString = name + "=" + value + ";path=/";
+        
+        // Only set expiration if days is provided
+        if (days) {
+          const date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          cookieString += ";expires=" + date.toUTCString();
+        }
+        
+        document.cookie = cookieString;
+        console.log('🍪 Cookie set (session):', name, '=', value);
+      }
+
+      // Function to get a cookie value
+      function getCookie(name) {
+        const nameEQ = name + "=";
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          if (cookie.indexOf(nameEQ) === 0) {
+            return cookie.substring(nameEQ.length, cookie.length);
+          }
+        }
+        return null;
+      }
+
+      // Function to mark popup as dismissed and set cookie
+      function dismissPopup() {
+        const dismissedAt = new Date().toISOString();
+        setCookie(DISMISS_COOKIE_NAME, dismissedAt); // Session cookie - no expiration param needed
+        console.log('Popup dismissed at:', dismissedAt);
+      }
+
       // ==== EVENT LOGGING & FAKE DATABASE ====
       const FAKE_DATABASE_ENDPOINT = '/fake-api/popup-events'; // Fake endpoint for event tracking
 
@@ -512,14 +549,21 @@ Contents:
         });
       }
 
+      // ==== CHECK FOR EXISTING DISMISSAL ====
+      const isDismissed = getCookie(DISMISS_COOKIE_NAME);
+      if (isDismissed) {
+        console.log('Popup already dismissed. Hiding popup.');
+        popupOverlay.style.display = 'none';
+        return; // Exit early, don't set up event listeners
+      }
+
       // Log popup impression
-      logEventToDB('popup_impression'); 
-      {% endcomment %}
+      logEventToDB('popup_impression');
 
       // OPEN: After 500ms delay
       setTimeout(() => {
         popupOverlay.classList.add('is-visible');
-        // logEventToDB('popup_displayed');
+        logEventToDB('popup_displayed');
       }, 500);
 
       // CLOSE Function
@@ -533,14 +577,16 @@ Contents:
       // Interaction: Click "Nah"
       closeLink.addEventListener('click', function(e) {
         e.preventDefault();
-        // logEventToDB('close_link_clicked');
+        logEventToDB('close_link_clicked');
+        dismissPopup();
         closePopup();
       });
 
       // Interaction: Click Outside
       popupOverlay.addEventListener('click', function(e) {
         if (e.target === popupOverlay) {
-          // logEventToDB('overlay_clicked');
+          logEventToDB('overlay_clicked');
+          dismissPopup();
           closePopup();
         }
       });
@@ -549,13 +595,15 @@ Contents:
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && popupOverlay.classList.contains('is-visible')) {
           logEventToDB('escape_key_pressed');
+          dismissPopup();
           closePopup();
         }
       });
 
       // Interaction: Shop Button
       shopBtn.addEventListener('click', function() {
-        // logEventToDB('shop_button_clicked');
+        logEventToDB('shop_button_clicked');
+        dismissPopup();
         window.location.href = '/discount/goodr5?redirect=/collections/all';
       });
 
@@ -564,7 +612,8 @@ Contents:
       if (closeIcon) {
         closeIcon.addEventListener('click', function(e) {
           e.preventDefault();
-          // logEventToDB('close_icon_clicked');
+          logEventToDB('close_icon_clicked');
+          dismissPopup();
           closePopup();
         });
       }
