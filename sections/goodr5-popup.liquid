@@ -184,9 +184,7 @@ Contents:
   /* existing styles follow */
   .goodr5-overlay, .goodr5-modal {
     font-family: "canada-type-gibson", sans-serif;
-    font-weight: 900;
-    font-style: bold;
-    ...
+    box-sizing: border-box;
   }
   ...
 {% endstyle %}
@@ -234,12 +232,6 @@ Contents:
   </div>
 
   {% style %}
-    /* --- FONTS --- */
-    .goodr5-overlay, .goodr5-modal {
-      font-family: "canada-type-gibson", sans-serif;
-      box-sizing: border-box;
-    }
-
     /* --- OVERLAY --- */
     .goodr5-overlay {
       position: fixed;
@@ -249,7 +241,7 @@ Contents:
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 9999;
-      display: flex;
+      display: none; 
       justify-content: center;
       align-items: center;
       opacity: 0;
@@ -259,7 +251,6 @@ Contents:
 
     .goodr5-overlay.is-visible {
       opacity: 1;
-      visibility: visible;
     }
 
     /* --- MODAL BOX --- */
@@ -474,9 +465,61 @@ Contents:
       const shopBtn = document.getElementById('goodr5ShopBtn');
       const closeLink = document.getElementById('goodr5CloseLink');
 
+      {% comment %}
+      // ==== EVENT LOGGING & FAKE DATABASE ====
+      const FAKE_DATABASE_ENDPOINT = '/fake-api/popup-events'; // Fake endpoint for event tracking
+
+      // Function to get or create a session ID
+      function getSessionId() {
+        let sessionId = sessionStorage.getItem('goodr5_session_id');
+        if (!sessionId) {
+          sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+          sessionStorage.setItem('goodr5_session_id', sessionId);
+        }
+        return sessionId;
+      }
+
+      // Function to log event to fake database
+      function logEventToDB(eventType) {
+        const timestamp = new Date().toISOString();
+        const eventData = {
+          event_type: eventType,
+          timestamp: timestamp,
+          session_id: getSessionId(),
+          page_url: window.location.href,
+          user_agent: navigator.userAgent
+        };
+
+        // Log to console for debugging
+        console.log('Popup Event Logged:', eventData);
+
+        // Store in localStorage as backup
+        const events = JSON.parse(localStorage.getItem('goodr5_events') || '[]');
+        events.push(eventData);
+        localStorage.setItem('goodr5_events', JSON.stringify(events));
+
+        // POST to fake database endpoint
+        fetch(FAKE_DATABASE_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(eventData)
+        })
+        .catch(error => {
+          // Gracefully handle if endpoint doesn't exist (expected for fake DB)
+          console.log('Event stored locally (fake DB endpoint not available):', eventType);
+        });
+      }
+
+      // Log popup impression
+      logEventToDB('popup_impression'); 
+      {% endcomment %}
+
       // OPEN: After 500ms delay
       setTimeout(() => {
         popupOverlay.classList.add('is-visible');
+        // logEventToDB('popup_displayed');
       }, 500);
 
       // CLOSE Function
@@ -490,12 +533,14 @@ Contents:
       // Interaction: Click "Nah"
       closeLink.addEventListener('click', function(e) {
         e.preventDefault();
+        // logEventToDB('close_link_clicked');
         closePopup();
       });
 
       // Interaction: Click Outside
       popupOverlay.addEventListener('click', function(e) {
         if (e.target === popupOverlay) {
+          // logEventToDB('overlay_clicked');
           closePopup();
         }
       });
@@ -503,12 +548,14 @@ Contents:
       // Interaction: ESC Key
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && popupOverlay.classList.contains('is-visible')) {
+          logEventToDB('escape_key_pressed');
           closePopup();
         }
       });
 
       // Interaction: Shop Button
       shopBtn.addEventListener('click', function() {
+        // logEventToDB('shop_button_clicked');
         window.location.href = '/discount/goodr5?redirect=/collections/all';
       });
 
@@ -517,6 +564,7 @@ Contents:
       if (closeIcon) {
         closeIcon.addEventListener('click', function(e) {
           e.preventDefault();
+          // logEventToDB('close_icon_clicked');
           closePopup();
         });
       }
