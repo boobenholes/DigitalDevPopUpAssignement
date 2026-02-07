@@ -632,8 +632,10 @@ Contents:
       shopBtn.addEventListener('click', function() {
         logEventToDB('shop_button_clicked');
         dismissPopup();
+        window.location.href = '/discount/goodr5?redirect=/collections/all';
         
-        checkDiscountExists('goodr5').then(exists => {
+        {% comment %} 
+         checkDiscountExists('goodr5').then(exists => {
           if (exists) {
             console.log('Discount code verified, redirecting...');
             window.location.href = '/discount/goodr5?redirect=/collections/all';
@@ -641,7 +643,8 @@ Contents:
             console.warn('Discount code not found, redirecting to shop without code');
             window.location.href = '/collections/all';
           }
-        });
+        }); 
+        {% endcomment %}
       });
 
       // Interaction: Close icon
