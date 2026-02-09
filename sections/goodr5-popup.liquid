@@ -1,179 +1,23 @@
 {% comment %}
 Pop Up Info:
-- flaoting window that is centered on the screen for both mobile and desktop
-- appears on page load
-- has a white background with a blue border and shadow
-- interactions:
+  - flaoting window that is centered on the screen for both mobile and desktop
+  - appears on page load
+  - has a white background with a blue border and shadow
+  - interactions:
     - clicking outside the popup closes it
     - clicking the "Nah, I Hate Deals" text closes it
     - clicking the "SHOP ALL STYLES" button takes user to the shop page and adds the code goodr5 to their cart
     - esc key also closes the popup
+    - Be able to still tab around the screen
+    - Clicking the x at the top right closes popup
+    - Hover button response as if it is being pushed in(desktop only) 
 Contents:
-- Desktop
-    - Desktop Overlay Background
-        - H 654 W 484
-        - Color White (#FFFFFF)
-        - Corner Radius 8px
-        - Stroke #0C2340 width 3px
-        - Shadow color #0C2340 -4, 4, 0, 0
-    - image layout: picture that i will provide
-        - Flow: Vertical
-        - Width: Fixed (374px)
-        - Height Fixed (360px)
-        - Radius 4px
-        - Padding
-            - Top 144px
-            - Right 82px
-            - Bottom 144px
-            - Left 82px
-            - Gap 10px
-    - company logo centered on image: logo will be provided by me
-    - Text under picture
-        - Width: Fill (374px)
-        - Height: Hug (56px)
-        - Text: "Use code goodr5 for $5 off your first order"
-        - Font: Gibson
-        - Size: 24px
-        - Weight: 700
-        - Color: Navy #0C2340
-        - horizontal align: center
-        - line height: 28px
-        - letter spacing: 0%
-        - style: Bold
-        - case: Uppercase
-        - goodr5 is pink #E06287
-    - Button
-        - Flow: horizontal
-        - Width: Fill (374px)
-        - Height: Hug (42px)
-        - radius 25px
-        - border: 2px
-            - alignment: inside
-        - background color: yellow #EDE939
-        - padding
-            - Top 12px
-            - Right 121px
-            - Bottom 12px
-            - Left 121px
-            - gap 10px
-        - shadow color: #0C2340 -4, 4, 0, 0
-        - Text: "SHOP ALL STYLES"
-            - Width: Hug 150px
-            - Height: Hug 18px
-            - border: 1px
-                - alignment: outside
-            - Font: Gibson
-            - weight: 700
-            - style: Bold
-            -line height: 100%
-            - letter spacing: 0%
-            - horizontal align: center
-            - case: Uppercase
-            - color: Navy #0C2340
-            - size: 18px
-            - drop shadow: #0C2340 -2.75, 2.75, 0, 0
-    - Text under button
-        - Width: hug (164px)
-        - Height: Hug (18px)
-        - Text: "Nah, I Hate Deals"
-        - Font: Gibson
-        - style: bold
-        - Size: 18px
-        - Weight: 700
-        - line height: 100%
-        - letter spacing: 0%
-        - Color: Navy #0C2340
-        - horizontal align: center
-        - case: uppercase
-        - decorations: underline
-            - style: solid
-            - color: Navy #0C2340
-            - thickness: 0%
-            - offset: 0%
-            - skip ink: true
-- Mobile
-    - Mobile Overlay Background
-        - H 550 W 326
-        - Color White (#FFFFFF)
-        - Corner Radius 4px
-        - Stroke #0C2340 width 2px
-        - Shadow color #0C2340 -2.75, 2.75, 0, 0
-    - image layout: picture that i will provide
-        - Flow: Vertical
-        - Width: Fixed (252px)
-        - Height Fixed (342px)
-        - Radius 4px
-        - Padding
-            - Top 132px
-            - Right 23px
-            - Bottom 132px
-            - Left 23px
-            - Gap 10px
-    - company logo centered on image - logo will be provided by me
-        - 
-    - Text under picture
-        - Width: Fill (252px)
-        - Height: Hug (40px)
-        - Text: "Use code goodr5 for $5 off your first order"
-        - Font: Gibson
-        - Size: 18px
-        - Weight: 700
-        - Color: Navy #0C2340
-        - horizontal align: center
-        - line height: 20px
-        - letter spacing: 0%
-        - style: Bold
-        - case: Uppercase
-        - goodr5 is pink #E06287
-    - Button
-        - Flow: horizontal
-        - Width: Fill (252px)
-        - Height: Hug (28px)
-        - radius 25px
-        - border: 1.5px
-            - alignment: inside
-        - background color: yellow #EDE939
-        - padding
-            - Top 12px
-            - Right 81.49px
-            - Bottom 12px
-            - Left 81.49px
-            - gap 6.73px
-        - shadow color: #0C2340 -2.75, 2.75, 0, 0
-        - Text: "SHOP ALL STYLES"
-            - Width: Hug 117px
-            - Height: Hug 14px
-            - border: .67px
-                - alignment: outside
-            - Font: Gibson
-            - weight: 700
-            - style: Bold
-            -line height: 100%
-            - letter spacing: 0%
-            - horizontal align: center
-            - case: Uppercase
-            - color: white #FFFFFF
-            - size: 14px
-            - drop shadow: #0C2340 -1.85, 1.85, 0, 0
-    - Text under button
-        - Width: hug (128px)
-        - Height: Hug (14px)
-        - Text: "Nah, I Hate Deals"
-        - Font: Gibson
-        - style: bold
-        - Size: 14px
-        - Weight: 700
-        - line height: 100%
-        - letter spacing: 0%
-        - Color: Navy #0C2340
-        - horizontal align: center
-        - case: uppercase
-        - decorations: underline
-            - style: solid
-            - color: Navy #0C2340
-            - thickness: 0%
-            - offset: 0%
-            - skip ink: true
+  - Colors
+    - White #FFFFFF
+    - Navy #0C2340
+    - Pink #E06287
+    - Yellow #EDE939
+  - Font: Gibson (loaded from adobe fonts)
 
 {% endcomment %}
 
